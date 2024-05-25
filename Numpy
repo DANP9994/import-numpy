@@ -1,0 +1,43 @@
+import numpy as np
+
+# Ask the user to enter the number of students and the number of subjects
+num_students = int(input("Enter the number of students: "))
+num_subjects = int(input("Enter the number of subjects: "))
+
+# Create a Numpy array to store the marks of each student in each subject
+marks = np.zeros((num_students, num_subjects))
+
+# Ask the user to enter the marks of each student in each subject
+for i in range(num_students):
+    for j in range(num_subjects):
+        marks[i, j] = float(input(f"Enter the marks for student {i+1} in subject {j+1}: "))
+
+# Calculate the total marks for each student using the sum() function of Numpy
+total_marks = np.sum(marks, axis=1)
+
+# Calculate the percentage for each student using the total marks and the formula
+percentages = (total_marks / (num_subjects * 100)) * 100
+
+# Function to determine grade based on percentage
+def get_grade(percentage):
+    if percentage >= 90:
+        return "A+"
+    elif percentage >= 80:
+        return "A"
+    elif percentage >= 70:
+        return "B+"
+    elif percentage >= 60:
+        return "B"
+    elif percentage >= 50:
+        return "C"
+    else:
+        return "F"
+
+# Calculate the grade for each student using the percentage
+grades = np.array([get_grade(p) for p in percentages])
+
+# Display the result for each student in a tabular format
+print("\nResults:")
+print("{:<12} {:<12} {:<12} {:<12}".format("Student", "Total Marks", "Percentage", "Grade"))
+for i in range(num_students):
+    print("{:<12} {:<12} {:<12.2f} {:<12}".format(f"Student {i+1}", total_marks[i], percentages[i], grades[i]))
